@@ -6,7 +6,7 @@ import { createUserService } from "@/services/UserService";
 import { ApiResponse } from "@/types/ApiRespone";
 import { User } from "@prisma/client";
 
-export default async function CreateUserAction(
+export default async function createUserAction(
   formData: FormData
 ): Promise<ApiResponse<User>> {
   const rawData = Object.fromEntries(formData);
@@ -23,7 +23,7 @@ export default async function CreateUserAction(
   const result = await createUserService(validation.data);
 
   if (result.error) {
-    return { success: false, error: getErrorMessage(result.error) };
+    return { success: false, error: result.error };
   }
 
   return { success: true, data: result.data };
