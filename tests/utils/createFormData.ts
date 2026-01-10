@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-export function createFormData(data: Record<string, any>): FormData {
+export function createFormData(data: Record<string, string>): FormData {
   const formData = new FormData();
 
   Object.entries(data).forEach(([key, value]) => {
