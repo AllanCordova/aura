@@ -11,12 +11,14 @@ export function getErrorMessage(error: unknown): string {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     const friendlyMessage = prismaErrorMap[error.code];
 
-    return friendlyMessage || `Erro Prisma ${error.code}: ${error.message}`;
+    if (friendlyMessage) return friendlyMessage;
+
+    return "Ocorreu um erro ao processar sua solicitação no banco de dados.";
   }
 
   if (error instanceof Error) {
-    return error.message;
+    return "Ocorreu um erro inesperado no sistema. Tente novamente mais tarde.";
   }
 
-  return `Ocorreu um erro inesperado: ${String(error)}`;
+  return "Ocorreu um erro inesperado.";
 }
