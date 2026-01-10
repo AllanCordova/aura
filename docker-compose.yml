@@ -1,0 +1,30 @@
+services:
+  db_postgres:
+    image: postgres:16
+    container_name: meu-postgres-server
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  db_test:
+    image: postgres:16
+    container_name: postgres-test-server
+    restart: always
+    environment:
+      POSTGRES_DB: aura_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_test_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
+  db_test_data:
