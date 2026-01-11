@@ -1,11 +1,51 @@
 /**
  * @jest-environment node
  */
-import createUserAction from "@/actions/UserAction";
+import { createUserAction, getUserAction } from "@/actions/UserAction";
 import prisma from "@/lib/prisma";
 import { createFormData } from "../../../utils/createFormData";
+import { createManyUserService } from "@/services/UserService";
 
-describe("Action: User Flow", () => {
+describe("Get Action: User Flow", () => {
+  beforeEach(async () => {
+    const newUsers = [
+      {
+        name: "Allan",
+        email: "teste@abstracao.com",
+      },
+      {
+        name: "Maria",
+        email: "maria@abstracao.com",
+      },
+      {
+        name: "João",
+        email: "joão@abstracao.com",
+      },
+    ];
+
+    await createManyUserService(newUsers);
+  });
+
+  it("Get all data", async () => {
+    const data = await getUserAction();
+
+    expect(data.success).toBe(true);
+
+    expect(data.data![0].name).toBe("Allan");
+
+    expect(data.data![2].name).toBe("João");
+  });
+
+  it("Get not fount data", async () => {
+    const data = await getUserAction();
+
+    expect(data.success).toBe(true);
+
+    expect(data.data![3]).toBe(undefined);
+  });
+});
+
+describe("Create Action: User Flow", () => {
   it("Create a valid data", async () => {
     const newUser = {
       name: "Allan",
