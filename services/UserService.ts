@@ -16,3 +16,29 @@ export async function createUserService(
     };
   }
 }
+
+export async function createManyUserService(
+  data: Prisma.UserCreateInput[]
+): Promise<ApiResponse<User[]>> {
+  try {
+    await prisma.user.createMany({ data });
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: getErrorMessage(error),
+    };
+  }
+}
+
+export async function getUserService(): Promise<ApiResponse<User[]>> {
+  try {
+    const user = await prisma.user.findMany();
+    return { success: true, data: user };
+  } catch (error) {
+    return {
+      success: false,
+      error: getErrorMessage(error),
+    };
+  }
+}

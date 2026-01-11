@@ -2,11 +2,21 @@
 
 import { getErrorMessage } from "@/lib/ErrorMessages";
 import { createUserSchema } from "@/lib/schemas/UserSchema";
-import { createUserService } from "@/services/UserService";
+import { createUserService, getUserService } from "@/services/UserService";
 import { ApiResponse } from "@/types/ApiRespone";
 import { User } from "@prisma/client";
 
-export default async function createUserAction(
+export async function getUserAction(): Promise<ApiResponse<User[]>> {
+  const result = await getUserService();
+
+  if (result.error) {
+    return { success: false, error: result.error };
+  }
+
+  return { success: true, data: result.data };
+}
+
+export async function createUserAction(
   formData: FormData
 ): Promise<ApiResponse<User>> {
   const rawData = Object.fromEntries(formData);
