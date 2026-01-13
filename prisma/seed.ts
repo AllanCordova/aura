@@ -14,10 +14,15 @@ const userData: Prisma.UserCreateInput[] = [
   {
     name: "Alice",
     email: "alice@prisma.io",
+    password: "withouthash",
+    accounts: {
+      create: [{ amount: 100.0 }, { amount: 50.5 }],
+    },
   },
   {
     name: "Bob",
     email: "bob@prisma.io",
+    password: "withouthash",
   },
 ];
 
