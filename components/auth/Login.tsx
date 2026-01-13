@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Login } from "@/actions/AuthAction";
+import { login } from "@/actions/AuthAction";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -15,7 +15,7 @@ export default function LoginPage() {
     setLoading(true);
     setMessage("");
 
-    const result = await Login(formData);
+    const result = await login(formData);
 
     if (result.success) {
       setMessage("✅ Login realizado! Redirecionando...");

@@ -17,11 +17,14 @@ export async function signUpService(
         ...data,
         password: hashedPassword,
       },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
     });
 
-    const { password, ...userWithoutPassword } = user;
-
-    return { success: true, data: userWithoutPassword };
+    return { success: true, data: user };
   } catch (error) {
     return {
       success: false,
@@ -56,7 +59,8 @@ export async function loginService(
 
     const token = jwt.sign({ userId: user.id }, secret, { expiresIn: "1d" });
 
-    const { password, ...userWithoutPassword } = user;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _, ...userWithoutPassword } = user;
 
     return {
       success: true,

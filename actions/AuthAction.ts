@@ -30,7 +30,7 @@ export async function signUp(
   return { success: true, data: result.data };
 }
 
-export async function Login(
+export async function login(
   formData: FormData
 ): Promise<ApiResponse<SafeUser>> {
   const rawData = Object.fromEntries(formData);
