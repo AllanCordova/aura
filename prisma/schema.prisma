@@ -7,7 +7,18 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  password String
+  name     String?
+  accounts Account[]
+}
+
+model Account {
+  id     String @id @default(uuid())
+  
+  amount Float  @default(0.0)
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
 }
